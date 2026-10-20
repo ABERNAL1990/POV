@@ -1,0 +1,459 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Laboratorio POV</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: página crema tipo diapositiva; secciones apiladas Paso A → B → C, bloques de color Usuario / Necesita / Porque */
+:root{
+  --bg:#F4F3EE; --surface:#FBFAF7; --ink:#14284B; --muted:#4B5568; --line:#DEDCD4;
+  --blue:#2462B0; --blue-soft:#DCE7F7; --peach:#FBE3D5; --rust:#C4511F; --orange:#F0975A;
+  --navy:#14284B; --on-navy:#F4F3EE; --on-navy-muted:#B9C4D8; --sand:#E8EDF4;
+  --ok:#2C7A4B; --ok-soft:#DFF0E4; --warn:#A8620F; --warn-soft:#FBEFD9; --bad:#B8432A; --bad-soft:#F8DDD3;
+  --display:"Carlito","Calibri","Segoe UI",system-ui,sans-serif;
+  --body:"Nunito","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1A2E; --surface:#16233B; --ink:#EEF1F6; --muted:#A7B2C4; --line:#2A3A57;
+  --blue:#86B3EE; --blue-soft:#1C3257; --peach:#3D2A22; --rust:#F29A72; --orange:#F0975A;
+  --navy:#22406E; --on-navy:#F4F3EE; --on-navy-muted:#C3CEE0; --sand:#13213A;
+  --ok:#76CF9B; --ok-soft:#163726; --warn:#F2BE6B; --warn-soft:#3A2D14; --bad:#F29C83; --bad-soft:#43261D;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1A2E; --surface:#16233B; --ink:#EEF1F6; --muted:#A7B2C4; --line:#2A3A57;
+  --blue:#86B3EE; --blue-soft:#1C3257; --peach:#3D2A22; --rust:#F29A72; --orange:#F0975A;
+  --navy:#22406E; --on-navy:#F4F3EE; --on-navy-muted:#C3CEE0; --sand:#13213A;
+  --ok:#76CF9B; --ok-soft:#163726; --warn:#F2BE6B; --warn-soft:#3A2D14; --bad:#F29C83; --bad-soft:#43261D;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;padding-block:40px 64px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;text-wrap:balance;line-height:1.1}
+h1{font-size:clamp(2.2rem,5vw,3.4rem)}
+h2{font-size:clamp(1.6rem,3.4vw,2.3rem)}
+h3{font-size:1.15rem}
+p{margin:0}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue)}
+.eyebrow.rust{color:var(--rust)}
+.lead{font-size:1.15rem;max-width:62ch}
+.lead b{font-weight:800}
+.sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.sec-head p{color:var(--muted);max-width:68ch}
+.muted{color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+/* Header */
+header{display:flex;flex-direction:column;gap:14px}
+.formula{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:1.15rem;margin-top:6px}
+.chip{display:inline-block;padding:4px 12px;border-radius:999px;font-weight:800}
+.c-u{background:var(--blue-soft);color:var(--blue)}
+.c-n{background:var(--peach);color:var(--rust)}
+.c-p{background:var(--navy);color:var(--on-navy)}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
+.rule{border-top:3px solid var(--blue);padding-top:12px;display:flex;flex-direction:column;gap:4px}
+.rule:nth-child(2){border-color:var(--rust)}
+.rule:nth-child(3){border-color:var(--ink)}
+.rule p{color:var(--muted)}
+
+/* Paso A */
+.caso{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;margin-bottom:18px}
+.persona{background:var(--navy);color:var(--on-navy);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:8px}
+.persona .eyebrow{color:var(--orange)}
+.persona small{color:var(--on-navy-muted);font-style:italic}
+.mapa{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mapa div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:.92rem;min-width:0}
+.mapa b{display:block;font-family:var(--display);font-size:1rem;margin-bottom:4px}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.slot{border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.slot.u{background:var(--blue-soft)} .slot.n{background:var(--peach)} .slot.p{background:var(--navy);color:var(--on-navy)}
+.slot .eyebrow{margin-bottom:2px}
+.slot.n .eyebrow{color:var(--rust)} .slot.p .eyebrow{color:var(--orange)}
+.opt{display:block;width:100%;text-align:left;background:var(--surface);color:var(--ink);border:2px solid transparent;border-radius:10px;padding:10px 12px;line-height:1.35;transition:transform .12s,border-color .12s}
+.opt:hover{transform:translateY(-1px);border-color:var(--line)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{font-size:.9rem;border-radius:10px;padding:10px 12px;background:var(--surface);color:var(--ink)}
+.fb b{display:block}
+.fb.ok b{color:var(--ok)} .fb.no b{color:var(--bad)}
+.sentence{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.sentence .big{font-family:var(--display);font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.45}
+.tok{padding:1px 8px;border-radius:6px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.tok.u{background:var(--blue-soft)} .tok.n{background:var(--peach)} .tok.p{background:var(--navy);color:var(--on-navy)}
+.tok.empty{background:transparent;border:2px dashed var(--line);color:var(--muted)}
+
+/* Paso B */
+.cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.case .q{font-family:var(--display);font-size:1.15rem;line-height:1.4}
+.errs{display:flex;flex-wrap:wrap;gap:8px}
+.err{border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:.88rem;font-weight:700}
+.err:hover{border-color:var(--blue)}
+.err.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.err.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.err:disabled{cursor:default}
+.better{background:var(--sand);border-radius:10px;padding:10px 12px;font-size:.92rem}
+.score{display:inline-flex;gap:8px;align-items:center;font-weight:800;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-variant-numeric:tabular-nums;width:max-content}
+
+/* Paso C */
+.builder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.field{border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.field.u{background:var(--blue-soft)} .field.n{background:var(--peach)} .field.p{background:var(--navy);color:var(--on-navy)}
+.field.n .eyebrow{color:var(--rust)} .field.p .eyebrow{color:var(--orange)}
+.field label{display:flex;flex-direction:column;gap:6px}
+.field .hint{font-size:.85rem;opacity:.85}
+textarea{width:100%;min-height:92px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);color:var(--ink);font:inherit;line-height:1.4}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.checks li{display:flex;gap:8px;align-items:flex-start;font-size:.86rem;line-height:1.35;background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 9px}
+.dot{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:.72rem;font-weight:800;margin-top:1px;background:var(--line);color:var(--muted)}
+.checks li.ok .dot{background:var(--ok);color:var(--surface)}
+.checks li.warn .dot{background:var(--warn);color:var(--surface)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{border:none;border-radius:999px;padding:10px 18px;font-weight:800;background:var(--navy);color:var(--on-navy)}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btn:hover{filter:brightness(1.08)}
+.ready{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:16px;margin-top:16px}
+.manual{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.manual label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.manual input{margin-top:5px;accent-color:var(--blue);width:16px;height:16px}
+.meter{background:var(--navy);color:var(--on-navy);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.meter .eyebrow{color:var(--orange)}
+.bar{height:10px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--orange);transition:width .3s}
+.meter .num{font-family:var(--display);font-size:2rem;font-variant-numeric:tabular-nums}
+.toast{font-size:.9rem;color:var(--ok);font-weight:700;align-self:center}
+.exrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.exlabel{font-weight:800;font-size:.9rem}
+.exchips{display:flex;flex-wrap:wrap;gap:8px}
+.exchip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:.88rem;font-weight:700;display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;text-align:left}
+.exchip small{font-weight:600;color:var(--muted);font-size:.76rem}
+.exchip:hover{border-color:var(--blue)}
+.exchip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--on-navy)}
+.exchip[aria-pressed="true"] small{color:var(--on-navy-muted)}
+.next{background:var(--sand);border-radius:14px;padding:20px 22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.next p{max-width:62ch}
+
+@media (max-width:860px){
+  .slots,.builder,.rules,.cases,.ready,.caso{grid-template-columns:minmax(0,1fr)}
+  .mapa{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Design Thinking · Fase 2 · Definir · Paso 5</span>
+    <h1>El punto de vista (POV)</h1>
+    <p class="lead">Una sola oración que resume todo lo que aprendiste en la fase de empatía. Tiene tres piezas y cada una cumple una regla.</p>
+    <div class="formula" aria-label="Fórmula del POV">
+      <span class="chip c-u">[Usuario]</span> necesita <span class="chip c-n">[necesidad]</span> porque <span class="chip c-p">[insight]</span>.
+    </div>
+    <div class="rules">
+      <div class="rule"><h3>Usuario específico</h3><p>«Rosa, dueña de panadería», no «los emprendedores».</p></div>
+      <div class="rule"><h3>La necesidad es un verbo</h3><p>«Organizar sus pedidos», no «una app de pedidos».</p></div>
+      <div class="rule"><h3>El insight explica</h3><p>El porqué que descubriste, no un dato obvio.</p></div>
+    </div>
+  </header>
+
+  <!-- PASO A -->
+  <section aria-labelledby="ha">
+    <div class="sec-head">
+      <span class="eyebrow">Paso A · Practica con el caso guía</span>
+      <h2 id="ha">Arma el POV de Rosa</h2>
+      <p>Lee lo que el equipo levantó en las entrevistas. Luego elige, en cada columna, la opción que cumple la regla. La oración se arma abajo.</p>
+    </div>
+    <div class="caso">
+      <div class="persona">
+        <span class="eyebrow">Cliente ideal</span>
+        <p>Rosa, 52 años, dueña de una panadería de barrio en Cuenca. La mayoría de sus pedidos llegan por WhatsApp.</p>
+        <small>Persona ficticia creada para fines didácticos.</small>
+      </div>
+      <div class="mapa">
+        <div><b>Dice</b>«No necesito tecnología, así me va bien.» «Los sábados esto es una locura.»</div>
+        <div><b>Hace</b>Anota los pedidos en un cuaderno. Responde audios mientras atiende el mostrador.</div>
+        <div><b>Piensa</b>«Si no contesto rápido, se van a otra panadería.» Duda de que una app «entienda» a sus clientes.</div>
+        <div><b>Siente</b>Agobio los fines de semana. Orgullo: sus clientes la llaman por su nombre.</div>
+      </div>
+    </div>
+    <div class="slots" id="slots"></div>
+    <div class="sentence" aria-live="polite">
+      <span class="eyebrow">El POV de Rosa</span>
+      <p class="big" id="rosaSentence"></p>
+      <p class="muted" id="rosaStatus"></p>
+    </div>
+  </section>
+
+  <!-- PASO B -->
+  <section aria-labelledby="hb">
+    <div class="sec-head">
+      <span class="eyebrow rust">Paso B · Cuidado</span>
+      <h2 id="hb">Detecta el error</h2>
+      <p>Cada POV tiene un problema. Elige cuál es. Después de responder verás una versión mejorada.</p>
+      <span class="score" id="score">0 / 4 aciertos</span>
+    </div>
+    <div class="cases" id="cases"></div>
+  </section>
+
+  <!-- PASO C -->
+  <section aria-labelledby="hc">
+    <div class="sec-head">
+      <span class="eyebrow">Paso C · Taller en equipos</span>
+      <h2 id="hc">Escribe el POV de tu equipo</h2>
+      <p>Explora los ejemplos de distintos negocios para ver cómo se arma un buen POV. Luego bórralo y escribe el de tu cliente ideal. La revisión automática es una guía: la última palabra la tienen tus entrevistas.</p>
+    </div>
+    <div class="exrow" role="group" aria-label="Ejemplos de POV">
+      <span class="exlabel">Ejemplos:</span>
+      <div class="exchips" id="exchips"></div>
+    </div>
+    <div class="builder">
+      <div class="field u">
+        <span class="eyebrow">Usuario</span>
+        <label for="inU"><span class="hint">Nombre, rol y contexto de una persona concreta.</span>
+          <textarea id="inU" placeholder="Ej.: Rosa, dueña de una panadería de barrio"></textarea></label>
+        <ul class="checks" id="ckU"></ul>
+      </div>
+      <div class="field n">
+        <span class="eyebrow">Necesita</span>
+        <label for="inN"><span class="hint">Empieza con un verbo. Nada de apps ni sistemas.</span>
+          <textarea id="inN" placeholder="Ej.: organizar los pedidos del fin de semana sin perder ninguno"></textarea></label>
+        <ul class="checks" id="ckN"></ul>
+      </div>
+      <div class="field p">
+        <span class="eyebrow">Porque</span>
+        <label for="inP"><span class="hint">El porqué escondido que descubriste.</span>
+          <textarea id="inP" placeholder="Ej.: su negocio vive del trato cercano y teme que la tecnología lo enfríe"></textarea></label>
+        <ul class="checks" id="ckP"></ul>
+      </div>
+    </div>
+    <div class="sentence" aria-live="polite">
+      <span class="eyebrow">Tu punto de vista</span>
+      <p class="big" id="mySentence"></p>
+      <div class="actions">
+        <button class="btn" id="copy" type="button">Copiar POV</button>
+        <button class="btn ghost" id="clear" type="button">Borrar y empezar</button>
+        <button class="btn ghost" id="example" type="button">Otro ejemplo →</button>
+        <span class="toast" id="toast" role="status"></span>
+      </div>
+    </div>
+    <div class="ready">
+      <div class="manual">
+        <h3>Revisión del equipo</h3>
+        <p class="muted">Esto no lo puede revisar la app. Márquenlo solo si es verdad.</p>
+        <label><input type="checkbox" id="m1"> <span>El insight se apoya en más de una entrevista.</span></label>
+        <label><input type="checkbox" id="m2"> <span>El problema es del cliente, no del equipo: salió de lo que dijo, hizo o vimos.</span></label>
+        <label><input type="checkbox" id="m3"> <span>El insight sorprendió al equipo: no es algo que ya sabíamos.</span></label>
+      </div>
+      <div class="meter">
+        <span class="eyebrow">Listo para la ficha</span>
+        <span class="num" id="pct">0 %</span>
+        <div class="bar"><i id="barFill"></i></div>
+        <p id="meterMsg" style="color:var(--on-navy-muted);font-size:.92rem"></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="next">
+    <p><b>Siguiente paso:</b> convierte tu POV en una pregunta reto «¿Cómo podríamos…?». El usuario y la necesidad pasan casi tal cual; el insight se vuelve la condición.</p>
+  </div>
+</div>
+
+<script>
+const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const words = s => norm(s).replace(/[^a-zñ0-9 ]/g,' ').split(/\s+/).filter(Boolean);
+
+/* ---------- Paso A ---------- */
+const SLOTS = [
+  {key:'u', label:'Usuario', options:[
+    {t:'Los emprendedores de Cuenca', ok:false, fb:'Demasiado genérico. No puedes diseñar para «los emprendedores»; necesitas una persona concreta.'},
+    {t:'Rosa, dueña de una panadería de barrio', ok:true, fb:'Persona concreta en un contexto concreto. El equipo sabe para quién diseña.'},
+    {t:'Una persona que usa WhatsApp', ok:false, fb:'Describe la herramienta, no a la persona ni su contexto.'}]},
+  {key:'n', label:'Necesita', options:[
+    {t:'una app de pedidos', ok:false, fb:'Esconde la solución y es un sustantivo. La necesidad se escribe con un verbo.'},
+    {t:'vender más', ok:false, fb:'Es un deseo amplio. En las entrevistas Rosa no habló de vender poco: habló de pedidos perdidos.'},
+    {t:'organizar los pedidos del fin de semana sin perder ninguno', ok:true, fb:'Empieza con un verbo y nace del dolor que viste: los pedidos perdidos del sábado.'}]},
+  {key:'p', label:'Porque', options:[
+    {t:'los sábados recibe muchos mensajes', ok:false, fb:'Es un hallazgo: cuenta qué pasa, pero no por qué Rosa actúa así.'},
+    {t:'su negocio vive del trato cercano y teme que la tecnología lo enfríe', ok:true, fb:'Es el insight: explica por qué dice «no necesito tecnología» y abre oportunidades.'},
+    {t:'no usa tecnología', ok:false, fb:'Es un dato obvio. Además es falso: Rosa ya usa WhatsApp.'}]}
+];
+const pick = {};
+function renderSlots(){
+  const host = document.getElementById('slots');
+  host.innerHTML = SLOTS.map((s,si)=>`
+    <div class="slot ${s.key}">
+      <span class="eyebrow">${s.label}</span>
+      ${s.options.map((o,oi)=>{
+        const sel = pick[s.key]===oi;
+        return `<button type="button" class="opt ${sel?(o.ok?'right':'wrong'):''}" data-s="${si}" data-o="${oi}" aria-pressed="${sel}">${esc(o.t)}</button>`;
+      }).join('')}
+      ${pick[s.key]!==undefined ? (()=>{const o=s.options[pick[s.key]];return `<div class="fb ${o.ok?'ok':'no'}"><b>${o.ok?'¡Bien elegido!':'Todavía no'}</b>${esc(o.fb)}</div>`})() : ''}
+    </div>`).join('');
+  host.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
+    pick[SLOTS[b.dataset.s].key]=+b.dataset.o; renderSlots();
+  }));
+  const part = k => { const s=SLOTS.find(x=>x.key===k); const i=pick[k];
+    return i===undefined ? `<span class="tok empty">${s.label.toLowerCase()}</span>` : `<span class="tok ${k}">${esc(s.options[i].t)}</span>`; };
+  document.getElementById('rosaSentence').innerHTML = `${part('u')} necesita ${part('n')} porque ${part('p')}.`;
+  const done = SLOTS.filter(s=>pick[s.key]!==undefined).length;
+  const right = SLOTS.filter(s=>pick[s.key]!==undefined && s.options[pick[s.key]].ok).length;
+  document.getElementById('rosaStatus').textContent =
+    right===3 ? 'Completo. Este es el POV que aparece en la diapositiva: tres piezas que cumplen su regla.'
+    : done===3 ? `Tienes ${right} de 3 piezas correctas. Cambia las que están en rojo.`
+    : `Elige las ${3-done} pieza${3-done===1?'':'s'} que faltan.`;
+}
+renderSlots();
+
+/* ---------- Paso B ---------- */
+const ERRS = ['Cliente genérico','Solución escondida','Síntoma en vez de causa','Insight obvio'];
+const CASES = [
+  {q:'Don Luis, mecánico de un taller en El Arenal, necesita un sistema de inventario porque pierde repuestos.', a:1,
+   why:'«Un sistema de inventario» ya es una solución. ¿Para qué lo querría? Para encontrar el repuesto correcto a tiempo.',
+   better:'Don Luis, mecánico de un taller en El Arenal, necesita encontrar el repuesto correcto a tiempo porque sus clientes confían en que él mismo revisa cada carro.'},
+  {q:'Los jóvenes necesitan ahorrar dinero porque sienten que los gastos pequeños no cuentan.', a:0,
+   why:'El insight es bueno, pero «los jóvenes» son millones de personas distintas. ¿A quién entrevistaste?',
+   better:'Mateo, estudiante de 20 años que trabaja los fines de semana, necesita ahorrar para su matrícula porque siente que los gastos pequeños no cuentan.'},
+  {q:'Carla, estudiante que vende postres por Instagram, necesita vender más porque vende poco.', a:2,
+   why:'«Vende poco» es el síntoma. Hay que preguntar por qué hasta llegar a la raíz.',
+   better:'Carla, estudiante que vende postres por Instagram, necesita cumplir sus pedidos sin faltar a clases porque teme perder clientes si dice «hoy no puedo».'},
+  {q:'Marta, dueña de una tienda de abarrotes, necesita controlar el fiado de sus vecinos porque no tiene un registro.', a:3,
+   why:'«No tiene un registro» es un dato que se ve a simple vista. No explica por qué no lleva la cuenta.',
+   better:'Marta, dueña de una tienda de abarrotes, necesita controlar el fiado de sus vecinos porque le da vergüenza cobrar a quienes conoce hace años.'}
+];
+const ans = {};
+function renderCases(){
+  const host=document.getElementById('cases');
+  host.innerHTML = CASES.map((c,ci)=>{
+    const a = ans[ci];
+    return `<article class="case">
+      <span class="eyebrow">Caso ${ci+1}</span>
+      <p class="q">«${esc(c.q)}»</p>
+      <div class="errs" role="group" aria-label="Tipo de error">
+        ${ERRS.map((e,ei)=>{
+          let cls=''; if(a!==undefined){ if(ei===c.a) cls='right'; else if(ei===a) cls='wrong'; }
+          return `<button type="button" class="err ${cls}" data-c="${ci}" data-e="${ei}" ${a!==undefined?'disabled':''}>${e}</button>`;}).join('')}
+      </div>
+      ${a!==undefined?`<div class="fb ${a===c.a?'ok':'no'}"><b>${a===c.a?'Correcto':'Era: '+ERRS[c.a]}</b>${esc(c.why)}</div>
+        <div class="better"><b>Versión mejorada:</b> ${esc(c.better)}</div>`:''}
+    </article>`;}).join('');
+  host.querySelectorAll('.err').forEach(b=>b.addEventListener('click',()=>{ans[b.dataset.c]=+b.dataset.e;renderCases();}));
+  const hits = Object.keys(ans).filter(k=>ans[k]===CASES[k].a).length;
+  const n = Object.keys(ans).length;
+  document.getElementById('score').textContent = `${hits} / 4 aciertos` + (n===4?' · ¡terminaste!':'');
+}
+renderCases();
+
+/* ---------- Paso C ---------- */
+const SOL = ['app','apps','aplicacion','aplicaciones','chatbot','bot','plataforma','software','pagina web','sitio web','web','sistema','programa','robot','inteligencia artificial','ia','herramienta digital','base de datos','dashboard','tienda en linea','redes sociales'];
+const GEN = ['emprendedores','jovenes','pymes','usuarios','personas','gente','clientes','estudiantes','empresas','negocios','todos','mercado','ciudadanos','consumidores','adultos','comerciantes','duenos','familias','profesionales','trabajadores'];
+const ARTS = ['los','las','el','la','un','una','unos','unas','todos','todas'].concat(GEN);
+const NOT_VERB = ['lugar','hogar','mujer','bienestar','taller','alquiler','placer','collar','altar','par','mar','ser humano'];
+const hasSol = s => { const t=' '+words(s).join(' ')+' '; return SOL.find(w=>t.includes(' '+w+' ')); };
+const hasName = s => (s||'').trim().split(/\s+/).some((t,i)=>/^[A-ZÁÉÍÓÚÑ]/.test(t) && !(i===0 && ARTS.includes(norm(t).replace(/[^a-zñ]/g,''))));
+const strip = (s,lead) => { let t=(s||'').trim().replace(/[.;,\s]+$/,''); if(lead) t=t.replace(new RegExp('^'+lead+'\\s+','i'),''); return t; };
+
+function checkU(v){
+  if(!v.trim()) return [['idle','Escribe quién es tu cliente ideal.']];
+  const w=words(v), gen=GEN.find(g=>w.includes(g));
+  return [
+    gen && !hasName(v) ? ['warn',`«${gen}» es un grupo, no una persona. Ponle nombre y rol.`] : ['ok','Es una persona concreta, no un grupo.'],
+    w.length<4 ? ['warn','Agrega su contexto: qué hace y dónde.'] : ['ok','Incluye contexto (rol, lugar o situación).']
+  ];
+}
+function checkN(v){
+  const t=strip(v,'necesita');
+  if(!t) return [['idle','Escribe qué necesita lograr.']];
+  const first=words(t)[0]||'', sol=hasSol(t);
+  const isVerb=/(ar|er|ir)(se|lo|la|los|las|le|les|me|nos)?$/.test(first) && !NOT_VERB.includes(first);
+  return [
+    isVerb ? ['ok',`Empieza con un verbo: «${first}».`] : ['warn',`«${first}» no parece un verbo. Prueba con organizar, responder, encontrar…`],
+    sol ? ['warn',`«${sol}» es una solución escondida. Pregunta «¿para qué?» y escribe eso.`] : ['ok','No trae la solución escondida.']
+  ];
+}
+function checkP(v){
+  const t=strip(v,'porque');
+  if(!t) return [['idle','Escribe el porqué que descubriste.']];
+  const w=words(t), sol=hasSol(t), nt=norm(t);
+  const dato=/^(no tiene|le falta|no hay|no sabe|no usa|no cuenta con|carece)/.test(nt);
+  return [
+    w.length<7 ? ['warn','Muy corto. Un insight explica el porqué con algo de detalle.'] : ['ok','Explica con detalle.'],
+    dato ? ['warn','Suena a carencia o dato obvio. ¿Por qué pasa eso? Pregunta otra vez.'] : ['ok','No es solo una carencia visible.'],
+    sol ? ['warn',`Menciona «${sol}». El insight habla de la persona, no de la solución.`] : ['ok','Habla de la persona, no de la tecnología.']
+  ];
+}
+const ins={u:document.getElementById('inU'),n:document.getElementById('inN'),p:document.getElementById('inP')};
+const EXAMPLES=[
+  {tag:'Taller mecánico', u:'Don Luis, mecánico de un taller en El Arenal', n:'encontrar el repuesto correcto a tiempo', p:'sus clientes confían en que él mismo revisa cada carro y no quiere dejarlos esperando'},
+  {tag:'Postres por Instagram', u:'Carla, estudiante de Contabilidad que vende postres por Instagram', n:'cumplir sus pedidos sin faltar a clases', p:'teme perder clientes si un día les dice «hoy no puedo» y siente que su negocio depende de estar siempre disponible'},
+  {tag:'Tienda de barrio', u:'Marta, dueña de una tienda de abarrotes en su barrio', n:'controlar el fiado de sus vecinos sin perder la cuenta', p:'le da vergüenza cobrar a quienes conoce desde hace años y prefiere perder dinero antes que una amistad'},
+  {tag:'Artesanía', u:'Doña Teresa, tejedora de sombreros de paja toquilla en Sígsig', n:'vender sus sombreros a un precio justo', p:'siente que los intermediarios no valoran las semanas de trabajo que hay detrás de cada sombrero y por eso acepta lo que le ofrecen'},
+  {tag:'Consultorio', u:'Dra. Paredes, odontóloga con un consultorio pequeño en el centro de Cuenca', n:'confirmar las citas de sus pacientes sin perder horas del día', p:'cada paciente que falta le cuesta ingresos, pero teme parecer insistente si los llama para recordarles'},
+  {tag:'Estudiante que trabaja', u:'Mateo, estudiante de 20 años que trabaja como mesero los fines de semana', n:'ahorrar para pagar la matrícula del próximo semestre', p:'siente que los gastos pequeños no cuentan y solo se da cuenta cuando a fin de mes ya no le alcanza'}
+];
+let exIdx=0;
+const EXAMPLE=EXAMPLES[0];
+function loadExample(i){
+  exIdx=i; const e=EXAMPLES[i];
+  ins.u.value=e.u; ins.n.value=e.n; ins.p.value=e.p;
+  ['m1','m2','m3'].forEach(id=>document.getElementById(id).checked=false);
+  update(); toast(`Ejemplo ${i+1} de ${EXAMPLES.length}: ${e.tag}`);
+}
+function markChips(){
+  const cur=EXAMPLES.findIndex(e=>e.u===ins.u.value&&e.n===ins.n.value&&e.p===ins.p.value);
+  document.querySelectorAll('.exchip').forEach((c,i)=>c.setAttribute('aria-pressed',String(i===cur)));
+}
+const KEY='laboratorio-pov-v1';
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d) return d; }catch(e){} return null; }
+function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch(e){} }
+
+function sentenceText(){
+  const u=strip(ins.u.value), n=strip(ins.n.value,'necesita'), p=strip(ins.p.value,'porque');
+  return {u,n,p,txt:`${u||'[Usuario]'} necesita ${n||'[necesidad]'} porque ${p||'[insight]'}.`};
+}
+function renderChecks(id,list){
+  document.getElementById(id).innerHTML=list.map(([s,t])=>`<li class="${s}"><span class="dot" aria-hidden="true">${s==='ok'?'✓':s==='warn'?'!':'·'}</span><span>${esc(t)}</span></li>`).join('');
+  return list;
+}
+function update(){
+  const a=renderChecks('ckU',checkU(ins.u.value)), b=renderChecks('ckN',checkN(ins.n.value)), c=renderChecks('ckP',checkP(ins.p.value));
+  const {u,n,p}=sentenceText();
+  const tok=(v,k,l)=> v?`<span class="tok ${k}">${esc(v)}</span>`:`<span class="tok empty">${l}</span>`;
+  document.getElementById('mySentence').innerHTML=`${tok(u,'u','usuario')} necesita ${tok(n,'n','necesidad')} porque ${tok(p,'p','insight')}.`;
+  const auto=[...a,...b,...c], okAuto=auto.filter(x=>x[0]==='ok').length;
+  const man=['m1','m2','m3'].filter(id=>document.getElementById(id).checked).length;
+  const pct=Math.round((okAuto+man)/(7+3)*100);
+  document.getElementById('pct').textContent=pct+' %';
+  document.getElementById('barFill').style.width=pct+'%';
+  const warns=auto.filter(x=>x[0]==='warn').length;
+  document.getElementById('meterMsg').textContent =
+    pct===100 ? 'Tu POV está listo. Pásalo a la ficha de definición (sección 4).'
+    : warns ? `Hay ${warns} aviso${warns===1?'':'s'} en las piezas. Revisa los puntos marcados con «!».`
+    : (okAuto<7 ? 'Completa las tres piezas.' : 'Las piezas están bien. Falta la revisión del equipo.');
+  markChips();
+  save({u:ins.u.value,n:ins.n.value,p:ins.p.value,m:['m1','m2','m3'].map(id=>document.getElementById(id).checked)});
+}
+const saved=load();
+const start=saved||{...EXAMPLE,m:[false,false,false]};
+ins.u.value=start.u; ins.n.value=start.n; ins.p.value=start.p;
+['m1','m2','m3'].forEach((id,i)=>{document.getElementById(id).checked=!!(start.m&&start.m[i]);});
+Object.values(ins).forEach(el=>el.addEventListener('input',update));
+['m1','m2','m3'].forEach(id=>document.getElementById(id).addEventListener('change',update));
+const toast=t=>{const el=document.getElementById('toast');el.textContent=t;clearTimeout(toast._t);toast._t=setTimeout(()=>el.textContent='',2200);};
+document.getElementById('clear').addEventListener('click',()=>{Object.values(ins).forEach(el=>el.value='');['m1','m2','m3'].forEach(id=>document.getElementById(id).checked=false);update();ins.u.focus();});
+document.getElementById('exchips').innerHTML=EXAMPLES.map((e,i)=>`<button type="button" class="exchip" data-i="${i}" aria-pressed="false">${esc(e.u.split(',')[0])}<small>${esc(e.tag)}</small></button>`).join('');
+document.querySelectorAll('.exchip').forEach(c=>c.addEventListener('click',()=>loadExample(+c.dataset.i)));
+document.getElementById('example').addEventListener('click',()=>{
+  const cur=EXAMPLES.findIndex(e=>e.u===ins.u.value&&e.n===ins.n.value&&e.p===ins.p.value);
+  loadExample(((cur<0?exIdx-1:cur)+1)%EXAMPLES.length);
+});
+document.getElementById('copy').addEventListener('click',()=>{
+  const t=sentenceText().txt;
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('mySentence'));const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Texto seleccionado: cópialo con Ctrl+C');};
+  try{ navigator.clipboard.writeText(t).then(()=>toast('POV copiado'),fallback); }catch(e){ fallback(); }
+});
+update();
+</script>
+
+</body></html>
